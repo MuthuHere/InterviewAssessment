@@ -11,7 +11,7 @@
         android:label="fragment_sph_list"
         tools:layout="@layout/fragment_sph_list" >
         <action
-            android:id="@+id/toDetailsScreen"
+            android:id="@+id/toDetailPage"
             app:destination="@id/sphDetailsFragment" />
     </fragment>
     <fragment
@@ -20,7 +20,7 @@
         android:label="fragment_sph_details"
         tools:layout="@layout/fragment_sph_details" >
         <action
-            android:id="@+id/toListScreen"
+            android:id="@+id/toListPage"
             app:destination="@id/sphListFragment" />
     </fragment>
 </navigation>

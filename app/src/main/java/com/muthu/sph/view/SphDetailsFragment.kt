@@ -24,7 +24,7 @@ class SphDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnDetailsPage.setOnClickListener {
-            val action =  SphDetailsFragmentDirections.toListScreen()
+            val action =  SphDetailsFragmentDirections.toListPage()
             Navigation.findNavController(view).navigate(action)
         }
     }
