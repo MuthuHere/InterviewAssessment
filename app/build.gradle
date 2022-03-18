@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-android-extensions'
+
 }
 
 android {
@@ -13,6 +17,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,7 +35,25 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding true // for data binding
+        viewBinding true // for view binding
+    }
+    kapt {
+        correctErrorTypes true
+    }
+
 }
+
+def lifecycle_version = '1.1.1'
+def support_version = '28.0.0'
+def retrofit_version = '2.3.0'
+def glide_version = '4.9.0'
+def rx_java_version = '2.1.1'
+def nav_version = '2.1.0-alpha05'
+def dagger_version = '2.14.1'
+
 
 dependencies {
 
@@ -39,7 +62,30 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:palette-v7:$support_version"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
+
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+
 }
