@@ -1,10 +1,11 @@
-package com.muthu.sph
+package com.muthu.sph.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.muthu.sph.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,11 +14,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //set up nav bar
         setupNavBar()
     }
-
 
     /**
      * Initializing the nav bar
@@ -28,13 +26,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-
-    /**
-     * when moving to the details screen or any other screen from
-     * home screen the below overridden function will take care of the navigation history
-     */
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
-
     }
 }

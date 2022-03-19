@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/sphListFragment"
         android:name="com.muthu.sph.view.SphListFragment"
-        android:label="fragment_sph_list"
+        android:label="SPH Data list"
         tools:layout="@layout/fragment_sph_list" >
         <action
             android:id="@+id/toDetailPage"

@@ -2,4 +2,6 @@
     <string name="app_name">SPHAssessment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="an_error_has_occurred_while_loading_data">Unable to fetch the data at this moment</string>
+    <string name="volume_of_mobile_data">Volume of Mobile Data</string>
 </resources>
