@@ -20,6 +20,8 @@ class SphListFragment : Fragment() {
     private lateinit var listViewModel: SphListViewModel
     lateinit var viewBinding: FragmentSphListBinding
 
+    private val resourceId = "a807b7ab-6cad-4aa6-87d0-e283a7353a0f"
+
     //adapter
     lateinit var sphListAdapter: SphListAdapter
 
@@ -40,7 +42,7 @@ class SphListFragment : Fragment() {
             yearWiseListData.observe(viewLifecycleOwner, dataListObserver)
             loading.observe(viewLifecycleOwner, loadingIndicatorObserver)
             loadError.observe(viewLifecycleOwner, errorDataObserver)
-            getDataList()
+            getDataList(resourceId)
         }
     }
 
@@ -51,14 +53,12 @@ class SphListFragment : Fragment() {
             //set up recyclerview & it's adapter
             viewBinding.rvDataPerYear.apply {
                 layoutManager = LinearLayoutManager(context)
-                sphListAdapter = SphListAdapter(it)
+                sphListAdapter = SphListAdapter(it,listViewModel.listDataModel)
                 adapter = sphListAdapter
 
                 visibility = View.VISIBLE
                 tv_error_no_data.visibility = View.GONE
             }
-
-
         }
     }
 

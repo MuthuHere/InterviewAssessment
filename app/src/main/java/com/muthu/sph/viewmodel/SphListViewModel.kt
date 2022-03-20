@@ -1,9 +1,9 @@
 package com.muthu.sph.viewmodel
 
 import android.app.Application
-import android.util.Log.d
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.muthu.sph.di.viewmodel.DaggerViewModelComponent
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
 import com.muthu.sph.model.SphError
@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Class to maintain all business logic for [ListDataModel] List and
@@ -19,6 +20,11 @@ import io.reactivex.schedulers.Schedulers
  */
 class SphListViewModel(application: Application) : AndroidViewModel(application) {
 
+    constructor(application: Application, isTest: Boolean = true) : this(application) {
+        isInjected = isTest
+    }
+
+    var isInjected = false
     lateinit var listDataModel: ListDataModel
     val yearWiseListData by lazy {
         MutableLiveData<List<Pair<String, List<Records>>>>()
@@ -32,21 +38,31 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
 
 
     private val disposable = CompositeDisposable()
-    private val apiService = ApiService()
+
+    @Inject
+    lateinit var apiService: ApiService
+
+    private fun inject() {
+        DaggerViewModelComponent.create().inject(this)
+    }
 
     // api service to get the data from server
     // the "resource_id" being passed as hardcoded value we should
-    fun getDataList() {
+    fun getDataList(resourceId: String) {
+        if (!yearWiseListData.value.isNullOrEmpty()) {
+            return
+        }
+        inject()
         loading.value = true
         disposable.add(
-            apiService.getData("a807b7ab-6cad-4aa6-87d0-e283a7353a0f")
+            apiService.getData(resourceId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(
                     object : DisposableSingleObserver<ListDataModel>() {
                         override fun onSuccess(t: ListDataModel) {
                             listDataModel = t
-                            groupDataByYear()
+                            groupDataByYear(listDataModel)
                         }
 
                         override fun onError(e: Throwable) {
@@ -66,7 +82,7 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
     //to show in our recyclerview it would be better restructure the data value as per our requirement
     //here i would like to change the response data to List<Pair<String, List<Records>>>
     //so that we can go with the year and its pair data(list of records in that particular year)
-    fun groupDataByYear() {
+    fun groupDataByYear(listDataModel: ListDataModel) {
         loading.value = false
         //grouping and re structuring the data
         val listOfSortedData =
@@ -82,8 +98,8 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
 
 
     // clear the CompositeDisposable when this viewModel's lifecycle gets clear
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
+//    override fun onCleared() {
+//        super.onCleared()
+//        disposable.clear()
+//    }
 }

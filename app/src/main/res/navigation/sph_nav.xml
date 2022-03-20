@@ -22,5 +22,11 @@
         <action
             android:id="@+id/toListPage"
             app:destination="@id/sphListFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <argument
+            android:name="listResponse"
+            app:argType="com.muthu.sph.model.ListDataModel" />
     </fragment>
 </navigation>

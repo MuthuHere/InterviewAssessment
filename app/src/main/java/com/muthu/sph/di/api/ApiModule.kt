@@ -1,5 +1,6 @@
 package com.muthu.sph.di.api
 
+import com.muthu.sph.service.ApiService
 import com.muthu.sph.service.DataApi
 import dagger.Module
 import dagger.Provides
@@ -13,11 +14,11 @@ import retrofit2.converter.gson.GsonConverterFactory
  * [ApiModule]
  */
 @Module
-class ApiModule {
+open class ApiModule {
     private val baseUrl = "https://data.gov.sg/api/action/"
 
     @Provides
-    fun provideDataApi(): DataApi {
+    open fun provideDataApi(): DataApi {
         return Retrofit.Builder().baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -25,4 +26,11 @@ class ApiModule {
             .create(DataApi::class.java)
 
     }
+
+    @Provides
+    open fun provideApiService(): ApiService {
+        return ApiService()
+    }
+
+
 }
