@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
@@ -9,41 +10,60 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tv_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/circle_bg"
             android:gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:text="2005" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/volume_of_mobile_data"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="#616161"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_value_mobile_data"
-            app:layout_constraintLeft_toRightOf="@id/tv_year"
+            app:layout_constraintEnd_toStartOf="@+id/iv_right_arrow"
+            app:layout_constraintLeft_toRightOf="@+id/tv_year"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--Text View for showing the exp-->
         <TextView
             android:id="@+id/tv_value_mobile_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/tv_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            app:layout_constraintEnd_toStartOf="@+id/iv_right_arrow"
+            app:layout_constraintLeft_toRightOf="@+id/tv_year"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="0.000" />
+
+        <ImageView
+            android:id="@+id/iv_right_arrow"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@android:drawable/ic_media_play"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

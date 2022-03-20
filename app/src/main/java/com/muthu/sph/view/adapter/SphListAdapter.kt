@@ -1,20 +1,24 @@
 package com.muthu.sph.view.adapter
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.muthu.sph.databinding.ItemDataBinding
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
 import com.muthu.sph.util.roundTo
-import kotlin.math.roundToInt
+import com.muthu.sph.util.toSphString
+import com.muthu.sph.view.SphListFragmentDirections
 
 /**
  * a class to handle [RecyclerView] adapter
  * data we got from [ListDataModel]
  */
-class SphListAdapter(private val listOfYearsAndData: List<Pair<String, List<Records>>>) :
+class SphListAdapter(
+    private val listOfYearsAndData: List<Pair<String, List<Records>>>,
+    private val listDataModel: ListDataModel,
+) :
     RecyclerView.Adapter<SphListAdapter.SphViewHolder>() {
 
 
@@ -33,16 +37,22 @@ class SphListAdapter(private val listOfYearsAndData: List<Pair<String, List<Reco
     override fun onBindViewHolder(holder: SphViewHolder, position: Int) {
         var usedDataInYear = 0.0
         listOfYearsAndData[position].second.forEach { unit ->
-            d("mmm ", "${unit.volumeOfMobileData}")
-
             usedDataInYear += unit.volumeOfMobileData?.toDouble()!!
         }
+
         with(holder) {
             binding.apply {
                 tvYear.text = listOfYearsAndData[position].first
-                tvValueMobileData.text = "${usedDataInYear.roundTo()}"
+                tvValueMobileData.text = usedDataInYear.toSphString()
+            }
+            //
+            itemView.setOnClickListener {
+                val action = SphListFragmentDirections.toDetailPage(position, listDataModel)
+                Navigation.findNavController(it).navigate(action)
             }
         }
+
+
     }
 
     //return the size of mobile Data

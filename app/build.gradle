@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
     id 'kotlin-android-extensions'
-
 }
 
 android {
@@ -83,5 +82,17 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
+    //viewpager
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    //unit test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "android.arch.core:core-testing:1.1.1"
 }
