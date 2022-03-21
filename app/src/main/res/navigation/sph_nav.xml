@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/sphListFragment"
         android:name="com.muthu.sph.view.SphListFragment"
-        android:label="SPH Data list"
-        tools:layout="@layout/fragment_sph_list" >
+        android:label="@string/str_home_title"
+        tools:layout="@layout/fragment_sph_list">
         <action
             android:id="@+id/toDetailPage"
             app:destination="@id/sphDetailsFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/sphDetailsFragment"
         android:name="com.muthu.sph.view.SphDetailsFragment"
-        android:label="fragment_sph_details"
-        tools:layout="@layout/fragment_sph_details" >
+        android:label="@string/str_statistics"
+        tools:layout="@layout/fragment_sph_details">
         <action
             android:id="@+id/toListPage"
             app:destination="@id/sphListFragment" />

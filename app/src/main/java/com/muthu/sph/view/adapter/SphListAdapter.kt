@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.muthu.sph.databinding.ItemDataBinding
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
-import com.muthu.sph.util.roundTo
+import com.muthu.sph.util.roundOff
 import com.muthu.sph.util.toSphString
 import com.muthu.sph.view.SphListFragmentDirections
 
@@ -43,7 +43,7 @@ class SphListAdapter(
         with(holder) {
             binding.apply {
                 tvYear.text = listOfYearsAndData[position].first
-                tvValueMobileData.text = usedDataInYear.toSphString()
+                tvValueMobileData.text = usedDataInYear.roundOff().toSphString()
             }
             //
             itemView.setOnClickListener {

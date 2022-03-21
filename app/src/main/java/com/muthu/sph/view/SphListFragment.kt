@@ -1,5 +1,6 @@
 package com.muthu.sph.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,15 +47,16 @@ class SphListFragment : Fragment() {
         }
     }
 
-
     //observers
     private val dataListObserver = Observer<List<Pair<String, List<Records>>>> { list ->
         list?.let {
             //set up recyclerview & it's adapter
             viewBinding.rvDataPerYear.apply {
                 layoutManager = LinearLayoutManager(context)
-                sphListAdapter = SphListAdapter(it,listViewModel.listDataModel)
-                adapter = sphListAdapter
+                if (adapter == null) {
+                    sphListAdapter = SphListAdapter(it, listViewModel.listDataModel)
+                    adapter = sphListAdapter
+                }
 
                 visibility = View.VISIBLE
                 tv_error_no_data.visibility = View.GONE
