@@ -1,19 +1,17 @@
 package com.muthu.sph.view
 
 import android.os.Bundle
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.muthu.sph.databinding.FragmentSphDetailsBinding
-import com.muthu.sph.model.Records
-import com.muthu.sph.viewmodel.SphListViewModel
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import com.muthu.sph.databinding.FragmentSphDetailsBinding
 import com.muthu.sph.model.ListDataModel
-import com.muthu.sph.view.adapter.ViewAdapter
+import com.muthu.sph.model.Records
+import com.muthu.sph.view.adapter.SphViewPagerAdapter
+import com.muthu.sph.viewmodel.SphListViewModel
 
 class SphDetailsFragment : Fragment() {
 
@@ -33,24 +31,36 @@ class SphDetailsFragment : Fragment() {
                 selectedPosition = SphDetailsFragmentArgs.fromBundle(it).position
                 listDataModel = SphDetailsFragmentArgs.fromBundle(it).listResponse
             }
+            //observing the changes
             listViewModel.yearWiseListData.observe(viewLifecycleOwner, dataListObserver)
-            getData()
+            groupData()
         }.root
     }
 
-    private fun getData() {
+    /**
+     * grouping the data back
+     */
+    private fun groupData() {
         listViewModel.groupDataByYear(listDataModel)
     }
 
+    /**
+     * listening the group data
+     */
     private val dataListObserver = Observer<List<Pair<String, List<Records>>>> { list ->
         listWholeData = list
         updateViewPagerList(listWholeData)
     }
 
+    /**
+     * update the data to the viewPager
+     * with the data
+     */
     private fun updateViewPagerList(records: List<Pair<String, List<Records>>>) {
-        val adapter = ViewAdapter(records)
+        val adapter = SphViewPagerAdapter(records)
         fragmentSphDetailsBinding.apply {
             this.viewpager.adapter = adapter
+            //setting the position which user clicks
             this.viewpager.setCurrentItem(selectedPosition, false)
         }
     }
