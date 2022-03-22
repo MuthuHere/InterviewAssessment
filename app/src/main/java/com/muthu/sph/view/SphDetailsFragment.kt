@@ -13,13 +13,13 @@ import com.muthu.sph.model.Records
 import com.muthu.sph.view.adapter.SphViewPagerAdapter
 import com.muthu.sph.viewmodel.SphListViewModel
 
-class SphDetailsFragment : Fragment() {
+class SphDetailsFragment : BaseFragment() {
 
     private lateinit var fragmentSphDetailsBinding: FragmentSphDetailsBinding
     private val listViewModel: SphListViewModel by activityViewModels()
-    lateinit var listWholeData: List<Pair<String, List<Records>>>
-    var selectedPosition: Int = 0
-    lateinit var listDataModel: ListDataModel
+    private lateinit var listWholeData: List<Pair<String, List<Records>>>
+    private var selectedPosition: Int = 0
+    private lateinit var listDataModel: ListDataModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,4 +64,16 @@ class SphDetailsFragment : Fragment() {
             this.viewpager.setCurrentItem(selectedPosition, false)
         }
     }
+
+    /**
+     * screen view for log
+     */
+    override fun getScreenNameForAnalytics(): String {
+        return "SphDetailsFragment"
+    }
+
+    override fun itemThatUserCurrentlyViewing(): Int {
+        return selectedPosition
+    }
+
 }

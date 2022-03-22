@@ -1,20 +1,23 @@
 package com.muthu.sph.util
 
 import android.content.Context
-import android.preference.PreferenceManager
+import com.google.gson.Gson
+import com.muthu.sph.model.ListDataModel
+
 
 class SharedPrefHelper(context: Context) {
+    private val gson = Gson()
+    private val prefData = "_PREF_DATA"
 
-    private val PREF_API_KEY = "API_KEY";
+    private val pref = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 
-    private val pref = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    fun saveApiKey(key: String?) {
-        pref.edit().putString(PREF_API_KEY, key).apply()
+    fun storeData(listDataModel: ListDataModel) {
+        val json = gson.toJson(listDataModel)
+        pref.edit().putString(prefData, json).apply()
     }
 
-
-    fun getApiKey() =
-        pref.getString(PREF_API_KEY, null)
+    fun retrieveData(): ListDataModel =
+        gson.fromJson(pref.getString(prefData, null), ListDataModel::class.java)
 
 }

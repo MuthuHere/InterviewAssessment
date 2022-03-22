@@ -49,7 +49,7 @@ class SphListViewModelTest {
 
     @Test
     fun getDataListSuccess() {
-        val records = Records(volumeOfMobileData="0.000384", quarter="2004-Q3", id=1)
+        val records = Records(volumeOfMobileData = "0.000384", quarter = "2004-Q3", id = 1)
 
         val testData = ListDataModel(null, null, null, null)
 
@@ -58,7 +58,10 @@ class SphListViewModelTest {
         Mockito.`when`(apiService.getData(validKey)).thenReturn(testSingle)
         sphListViewModel.getDataList(validKey)
 
-        Assert.assertEquals(records, sphListViewModel.yearWiseListData.value?.get(0)?.second?.get(0))
+        Assert.assertEquals(
+            records,
+            sphListViewModel.yearWiseListData.value?.get(0)?.second?.get(0)
+        )
         Assert.assertEquals(
             null,
             sphListViewModel.loadError.value
@@ -76,11 +79,14 @@ class SphListViewModelTest {
         Mockito.`when`(apiService.getData(key)).thenReturn(testSingle)
         sphListViewModel.getDataList(key)
 
+        //wrong response test
         Assert.assertEquals(null, sphListViewModel.yearWiseListData.value)
+        //wrong url test
         Assert.assertEquals(
             SphError(isError = true, message = "HTTP 404 Not Found"),
             sphListViewModel.loadError.value
         )
+        //loading indicator test
         Assert.assertEquals(false, sphListViewModel.loading.value)
     }
 

@@ -7,7 +7,7 @@ import dagger.Component
  * Dependency Injection
  * [ApiModule] is being injected in [ApiService]
  */
-@Component(modules = [ApiModule::class])
+@Component(modules = [ApiModule::class,])
 interface ApiComponent {
     fun inject(apiService: ApiService)
 }
