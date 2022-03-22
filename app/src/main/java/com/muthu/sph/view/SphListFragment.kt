@@ -1,8 +1,6 @@
 package com.muthu.sph.view
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import com.muthu.sph.view.adapter.SphListAdapter
 import com.muthu.sph.viewmodel.SphListViewModel
 import kotlinx.android.synthetic.main.fragment_sph_list.*
 
-class SphListFragment : Fragment() {
+class SphListFragment : BaseFragment() {
 
     private lateinit var listViewModel: SphListViewModel
     lateinit var viewBinding: FragmentSphListBinding
@@ -95,5 +93,18 @@ class SphListFragment : Fragment() {
         }
 
     }
+
+
+    /**
+     * screen view for log
+     */
+    override fun getScreenNameForAnalytics(): String {
+        return "SphListFragment";
+    }
+
+    override fun itemThatUserCurrentlyViewing(): Int? {
+        return null
+    }
+
 
 }

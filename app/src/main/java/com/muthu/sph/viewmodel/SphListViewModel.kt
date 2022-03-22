@@ -3,11 +3,13 @@ package com.muthu.sph.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.muthu.sph.di.api.AppModule
 import com.muthu.sph.di.viewmodel.DaggerViewModelComponent
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
 import com.muthu.sph.model.SphError
 import com.muthu.sph.service.ApiService
+import com.muthu.sph.util.SharedPrefHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -42,8 +44,19 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
     @Inject
     lateinit var apiService: ApiService
 
+    @Inject
+    lateinit var prefs: SharedPrefHelper
+
+    init {
+        DaggerViewModelComponent.builder()
+            .appModule(AppModule(getApplication()))
+            .build()
+            .inject(this)
+    }
+
+
     private fun inject() {
-        DaggerViewModelComponent.create().inject(this)
+      //  DaggerViewModelComponent.create().inject(this)
     }
 
     // api service to get the data from server
@@ -52,6 +65,9 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
         if (!yearWiseListData.value.isNullOrEmpty()) {
             return
         }
+        //retrieve data
+//        SharedPrefHelper(context = getApplication()).storeData()
+
         inject()
         loading.value = true
         disposable.add(
