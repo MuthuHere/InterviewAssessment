@@ -2,6 +2,7 @@ package com.muthu.sph
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.muthu.sph.di.api.AppModule
 import com.muthu.sph.di.viewmodel.DaggerViewModelComponent
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
@@ -41,8 +42,9 @@ class SphListViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        val testComponent = DaggerViewModelComponent.builder()
+         DaggerViewModelComponent.builder()
             .apiModule(ApiModuleTest(apiService))
+            .appModule(AppModule(application))
             .build()
             .inject(sphListViewModel)
     }
