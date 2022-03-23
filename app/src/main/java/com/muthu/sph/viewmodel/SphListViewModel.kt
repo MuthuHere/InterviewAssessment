@@ -47,7 +47,8 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
     @Inject
     lateinit var prefs: SharedPrefHelper
 
-    init {
+    //inject the lateinits with dagger
+    private fun inject() {
         DaggerViewModelComponent.builder()
             .appModule(AppModule(getApplication()))
             .build()
@@ -55,20 +56,35 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    private fun inject() {
-      //  DaggerViewModelComponent.create().inject(this)
+    fun getDataFromPrefs(): Boolean {
+        inject()
+        return try {
+            listDataModel = prefs.retrieveData()!!
+            groupDataByYear(listDataModel)
+            true
+        } catch (e: Exception) {
+            loadError.value = SphError(
+                true,
+                e.message
+                    ?: "Sorry, Unable to connect the server. Check your internet connection & Try again later"
+            )
+
+            false
+        }
+
     }
 
     // api service to get the data from server
     // the "resource_id" being passed as hardcoded value we should
     fun getDataList(resourceId: String) {
+        //from view & test case
+        inject()
+
         if (!yearWiseListData.value.isNullOrEmpty()) {
             return
         }
         //retrieve data
-//        SharedPrefHelper(context = getApplication()).storeData()
 
-        inject()
         loading.value = true
         disposable.add(
             apiService.getData(resourceId)
@@ -78,6 +94,8 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
                     object : DisposableSingleObserver<ListDataModel>() {
                         override fun onSuccess(t: ListDataModel) {
                             listDataModel = t
+                            //store data for offline
+                            prefs.storeData(t)
                             groupDataByYear(listDataModel)
                         }
 

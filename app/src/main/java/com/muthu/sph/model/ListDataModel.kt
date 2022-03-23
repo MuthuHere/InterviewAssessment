@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
  * Data class [ListDataModel]
  * the response from the @see baseUrl
  */
+
 data class ListDataModel(
     val help: String?,
     val success: String?,
@@ -47,7 +48,6 @@ data class ListDataModel(
 data class Result(
     @SerializedName("resource_id")
     val resourceId: String?,
-
     val records: List<Records>?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -88,8 +88,7 @@ data class Records(
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(volumeOfMobileData)
@@ -121,8 +120,7 @@ data class Links(
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(start)

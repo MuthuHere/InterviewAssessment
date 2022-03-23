@@ -14,6 +14,7 @@ import com.muthu.sph.view.SphListFragmentDirections
 /**
  * a class to handle [RecyclerView] adapter
  * data we got from [ListDataModel]
+ * on this [SphListAdapter] on tap the page redirect to the [Sphfr]
  */
 class SphListAdapter(
     private val listOfYearsAndData: List<Pair<String, List<Records>>>,

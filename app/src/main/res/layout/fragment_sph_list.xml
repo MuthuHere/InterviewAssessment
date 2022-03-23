@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/an_error_has_occurred_while_loading_data"
         android:visibility="gone"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rv_data_per_year"
         app:layout_constraintStart_toStartOf="@+id/rv_data_per_year"
