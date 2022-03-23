@@ -83,8 +83,6 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
         if (!yearWiseListData.value.isNullOrEmpty()) {
             return
         }
-        //retrieve data
-
         loading.value = true
         disposable.add(
             apiService.getData(resourceId)
@@ -94,8 +92,10 @@ class SphListViewModel(application: Application) : AndroidViewModel(application)
                     object : DisposableSingleObserver<ListDataModel>() {
                         override fun onSuccess(t: ListDataModel) {
                             listDataModel = t
-                            //store data for offline
-                            prefs.storeData(t)
+                            //store data for offline when run the real case
+                            //for testing the view model no need to save data
+                            if (!isInjected)
+                                prefs.storeData(t)
                             groupDataByYear(listDataModel)
                         }
 
