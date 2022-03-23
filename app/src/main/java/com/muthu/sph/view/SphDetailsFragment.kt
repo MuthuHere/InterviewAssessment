@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.muthu.sph.databinding.FragmentSphDetailsBinding
 import com.muthu.sph.model.ListDataModel
 import com.muthu.sph.model.Records
@@ -33,6 +34,9 @@ class SphDetailsFragment : BaseFragment() {
             }
             //observing the changes
             listViewModel.yearWiseListData.observe(viewLifecycleOwner, dataListObserver)
+
+
+
             groupData()
         }.root
     }
@@ -59,9 +63,18 @@ class SphDetailsFragment : BaseFragment() {
     private fun updateViewPagerList(records: List<Pair<String, List<Records>>>) {
         val adapter = SphViewPagerAdapter(records)
         fragmentSphDetailsBinding.apply {
-            this.viewpager.adapter = adapter
+            viewpager.apply{
+                this.adapter = adapter
+                this.setCurrentItem(selectedPosition, false)
+                this.offscreenPageLimit = 1 // as requested in the requirement
+
+
+
+            }
+
             //setting the position which user clicks
-            this.viewpager.setCurrentItem(selectedPosition, false)
+
+
         }
     }
 

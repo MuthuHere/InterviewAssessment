@@ -10,10 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.muthu.sph.databinding.FragmentSphListBinding
 import com.muthu.sph.model.Records
 import com.muthu.sph.model.SphError
+import com.muthu.sph.util.checkInternetAccess
 import com.muthu.sph.view.adapter.SphListAdapter
 import com.muthu.sph.viewmodel.SphListViewModel
-import kotlinx.android.synthetic.main.fragment_sph_list.*
 
+/**
+ * [SphListFragment] is the main listing page and binding with the [SphListViewModel]
+ * [SphListAdapter] used to load the list of data that we got from API
+ * ViewBinding has been implemented
+ */
 class SphListFragment : BaseFragment() {
 
     private lateinit var listViewModel: SphListViewModel
@@ -41,7 +46,18 @@ class SphListFragment : BaseFragment() {
             yearWiseListData.observe(viewLifecycleOwner, dataListObserver)
             loading.observe(viewLifecycleOwner, loadingIndicatorObserver)
             loadError.observe(viewLifecycleOwner, errorDataObserver)
-            getDataList(resourceId)
+
+            //check internet access is avail or not
+            //if avail then just load the data
+            //if not get data from local prefs
+            //if the app is installed 1st time &
+            // no internet then there is no data will be shown
+            if (context?.checkInternetAccess() == true) {
+                getDataList(resourceId)
+            } else {
+                getDataFromPrefs()
+            }
+
         }
     }
 
@@ -57,7 +73,7 @@ class SphListFragment : BaseFragment() {
                 }
 
                 visibility = View.VISIBLE
-                tv_error_no_data.visibility = View.GONE
+                viewBinding.tvErrorNoData.visibility = View.GONE
             }
         }
     }

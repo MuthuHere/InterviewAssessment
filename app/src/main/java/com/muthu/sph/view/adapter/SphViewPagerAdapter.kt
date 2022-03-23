@@ -10,6 +10,7 @@ import com.muthu.sph.model.Records
 import com.muthu.sph.util.roundOff
 import com.muthu.sph.util.toSphString
 
+
 class SphViewPagerAdapter(
     private val list: List<Pair<String, List<Records>>>
 ) : RecyclerView.Adapter<SphViewPagerAdapter.ViewHolder>() {
@@ -17,6 +18,8 @@ class SphViewPagerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemViewPagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+
         return ViewHolder(binding)
     }
 
@@ -41,6 +44,7 @@ class SphViewPagerAdapter(
                     val layoutManager = GridLayoutManager(rvQuarterDetails.context, 2)
                     this.rvQuarterDetails.layoutManager = layoutManager
                     val adapter = SphQuarterGridAdapter(second)
+
                     this.rvQuarterDetails.adapter = adapter
 
                 }
